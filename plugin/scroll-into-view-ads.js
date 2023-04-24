@@ -31,7 +31,7 @@ videojs.registerPlugin('scrollIntoViewAds', function() {
       // the player is not in the viewport
       currentPlayer.pause();
     }
-  };
+  }
 
   // +++ Checks if player is in view +++
   function isScrolledIntoView(elem) {
@@ -50,23 +50,24 @@ videojs.registerPlugin('scrollIntoViewAds', function() {
       elemBottom <= docViewBottom &&
       elemTop >= docViewTop
     );
-  };
+  }
 
   // +++ Set Boolean value for if ad is playing +++
   myPlayer.on(
     [
       'ads-ad-started',
+      'ads-load',
       'ads-ad-ended',
       'ima3-complete',
       'ads-ad-skipped',
       'adserror',
       'ads-allpods-completed'],
-    function(evtObject) {
-      if (evtObject.type == 'ads-ad-started') {
+    function (evtObject) {
+      if (evtObject.type == 'ads-ad-started' || evtObject.type == 'ads-load') { // set true to isAdPlaying when the event is ads-load or ads-ad-started
         isAdPlaying = true;
       } else {
         isAdPlaying = false;
       }
-  });
+    });
 
-});
+    });
